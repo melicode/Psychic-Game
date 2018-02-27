@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>The Guessing Game</title>
+</head>
+
+<body>
+
+
+  <div id="game">
+    <h1>The Psychic Game</h1>
+    <h3>Guess what letter I'm thinking of...</h3>
+    <p>Wins: <span id= "wins"></span></p>
+    <p>Losses: <span id= "losses"></span> </span></p>
+    <p>Guesses Left: <span id="guessLeft"></span></p>
+    <p>Your guesses so far: <span id="guessed"></span></p>
+  </div>
+
+
+<script type = "text/javascript">
+var letters = "abcdefghijklmnopqrstuvwxyz".split("");
+var wins = 0;
+var losses = 0;
+var guessesLeft;
+var guessed;
+var tobe;
+
+gameOver();
+display();
+
+document.onkeyup = function(event) {
+  var guess = event.key;
+  if (guess === tobe) {
+    win();
+  } else if (guessesLeft - 1 === 0) {
+    lost();
+  } else {
+    fail(guess);
+  }
+
+  display();
+}
+
+function display() {
+  var winPoints = document.getElementById("wins");
+  var pointsLost = document.getElementById("losses");
+  var guessLeft = document.getElementById("guessLeft");
+  var letterGuessed = document.getElementById("guessed");
+
+
+  winPoints.innerHTML = wins;
+  pointsLost.innerHTML = losses;
+  guessLeft.innerHTML = guessesLeft;
+  letterGuessed.innerHTML = guessed.join(',');
+}
+
+function win() {
+  wins++;
+  gameOver();
+}
+
+function lost() {
+  losses++;
+  gameOver();
+}
+
+function fail(letter) {
+  guessesLeft--;
+  guessed.push(letter);
+}
+
+function gameOver() {
+  guessesLeft = 9;
+  guessed = [];
+  tobe = letters[Math.floor(Math.random() * letters.length)];
+}
+
+</script>
+</html>
